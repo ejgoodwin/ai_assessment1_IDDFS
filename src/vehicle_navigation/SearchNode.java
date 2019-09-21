@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class SearchNode {
 	
-	private int x_location;
-	private int y_location;
+	private int x;
+	private int y;
 	private int depth;
 	public ArrayList<SearchNode> newNodes;
 	
@@ -26,42 +26,68 @@ public class SearchNode {
 		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 		};
+		
+		int[][] grid2 = new int [][] {
+			{0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1},
+			{0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3, 0, 1, 0},
+			{0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+			};
 	
-	public SearchNode(int x, int y, int depthIn) {
-		x_location = x;
-		y_location = y;
+	public SearchNode(int xIn, int yIn, int depthIn) {
+		x = xIn;
+		y = yIn;
 		depth = depthIn;
 		this.newNodes = new ArrayList<>();
 	}
 	
 	public boolean checkGoal() {
 		boolean goalReached = false;
-		if (grid1[x_location][y_location] == 3) {
+		if (grid2[x][y] == 3) {
 			goalReached = true;
 		}
 		return goalReached;
 	}
 	
+	public boolean checkTrafficJam() {
+		boolean trafficJam = false;
+		if (grid2[x][y] == 1) {
+			trafficJam = true;
+		}
+		return trafficJam;
+	}
+	
 	public ArrayList<SearchNode> expandNode(int depth) {
 		// Node north = [x-1][y]
-		if( (x_location - 1) >= 0 ) {
-			SearchNode north = new SearchNode(x_location -1, y_location, depth);
+		if( (x - 1) >= 0 ) {
+			SearchNode north = new SearchNode(x - 1, y, depth);
 			newNodes.add(north);
 		}
 		
 		// Node west = [x][y-1]
-		if( (y_location - 1 >= 0) ) {
-			SearchNode west = new SearchNode(x_location, y_location -1, depth);
+		if( (y - 1 >= 0) ) {
+			SearchNode west = new SearchNode(x, y - 1, depth);
 			newNodes.add(west);
 		}
 		// Node south = [x+1][y]
-		if( (x_location + 1) <= 14) {
-			SearchNode south = new SearchNode(x_location +1, y_location, depth);
+		if( (x + 1) <= 14) {
+			SearchNode south = new SearchNode(x + 1, y, depth);
 			newNodes.add(south);
 		} 
 		// Node east = [x][y+1]
-		if( (y_location + 1) <= 14) {
-			SearchNode east = new SearchNode(x_location, y_location +1, depth);
+		if( (y + 1) <= 14) {
+			SearchNode east = new SearchNode(x, y + 1, depth);
 			newNodes.add(east);
 		}
 
@@ -72,18 +98,11 @@ public class SearchNode {
 	public int getDepthLevel() {
 		return depth;
 	}
-	
-	public void setDepthLevel(int depthLevel) {
-		this.depth = depthLevel;
-	}
-	
-	public void getCoords() {
-		System.out.println("(" + x_location + ", " + y_location + ")" );
-	}
+
 	
 	@Override
 	public String toString() {
-		return "(" + x_location + ", " + y_location + ")";
+		return "(" + x + ", " + y + ")";
 	}
 
 }
