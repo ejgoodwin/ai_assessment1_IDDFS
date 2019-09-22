@@ -65,6 +65,7 @@ public class IDSearch {
 			// Expand if the node is not a traffic jam
 			System.out.println("Traffic jam: " + current.checkTrafficJam());
 			if(!current.checkTrafficJam()) {
+				
 				ArrayList<SearchNode> expandedNodes = current.expandNode(depth);
 				System.out.println("Expanded Nodes: " + expandedNodes);
 				for (SearchNode node : expandedNodes) {
